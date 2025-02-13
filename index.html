@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        /* Modern CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Variables */
+        :root {
+            --primary-color: #111111;
+            --accent-color: #00A3FF;
+            --text-color: #FFFFFF;
+            --background-color: #1A1A1A;
+            --gray-dark: #222222;
+            --gray-medium: #333333;
+            --blue-glow: 0 0 10px rgba(0, 163, 255, 0.5);
+            --section-padding: 5rem 2rem;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        nav.scrolled {
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 163, 255, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: var(--section-padding);
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--gray-dark) 100%);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-color);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: var(--section-padding);
+            background-color: var(--gray-light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--gray-dark);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--blue-glow);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: var(--section-padding);
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: var(--section-padding);
+            background-color: var(--gray-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            padding: 1rem 2rem;
+            background: var(--gray-medium);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            box-shadow: var(--blue-glow);
+            transform: translateY(-2px);
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 163, 255, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Aiden West</a>
+            <div class="nav-links">
+                <a href="#projects">Projects</a>
+                <a href="about.html">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Hey, I'm <br>Aiden</h1>
+            <p>A nerd who loves coding up unique solutions to problems, and creating fun projects </p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </div>
+    </section>
+
+    <section id="projects" class="projects">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <!-- Project One -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="0">
+                <img src="images/trogq.png" alt="Trogdor 2 Game Screenshot" class="project-image">
+                <div class="project-content">
+                    <h3>Trogdor 2</h3>
+                    <p>A retro-style arcade game where players control a dragon named Trogdor to burn down villages while dodging knights, wizards, and other enemies across increasingly challenging levels. Players must stomp peasants to build up their burnination power, which allows them to destroy houses and face off against powerful boss enemies.</p>
+                </div>
+            </div>
+            <!-- Project Two -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="images/nap.png" alt="Napoleon Chat Bot Interface" class="project-image">
+                <div class="project-content">
+                    <h3>Napoleon Chat Bot</h3>
+                    <p>A hilarious AI chatbot that brings Napoleon Bonaparte to life as an unhinged Twitch streamer, combining voice interaction and AI-powered responses to create an experience where the French emperor begs for Prime subscriptions while plotting world conquest.</p>
+                </div>
+            </div>
+            <!-- Project Three -->
+            <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="images/mtg.jpg" alt="Project Three Screenshot" class="project-image">
+                <div class="project-content">
+                    <h3>MTG Collection Manager</h3>
+                    <p>This is a web application for managing a Magic: The Gathering card collection, allowing users to search for cards, view their prices, add them to their collection (in both regular and foil versions), and track the total value of their collection. The site includes user authentication and integrates with the Scryfall API to fetch card data and images.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h2 class="section-title">Get In Touch</h2>
+            <p>Interested in working together? Let's create something amazing.</p>
+            <div class="social-links">
+                <a href="#" target="_blank" data-aos="fade-up" data-aos-delay="0">LinkedIn</a>
+                <a href="#" target="_blank" data-aos="fade-up" data-aos-delay="100">GitHub</a>
+                <a href="mailto:your@email.com" data-aos="fade-up" data-aos-delay="200">Email</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Aiden West. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // GSAP animations
+        gsap.from('.hero-content', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html>
