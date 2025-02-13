@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N×N Sliding Puzzle Solver - Aiden West</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        /* Variables */
+        :root {
+            --primary-color: #111111;
+            --accent-color: #00A3FF;
+            --text-color: #FFFFFF;
+            --background-color: #1A1A1A;
+            --gray-dark: #222222;
+            --gray-medium: #333333;
+            --blue-glow: 0 0 10px rgba(0, 163, 255, 0.5);
+            --section-padding: 5rem 2rem;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Project Header */
+        .project-header {
+            padding: calc(var(--section-padding) + 4rem) 2rem 3rem;
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--gray-dark) 100%);
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .project-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: var(--gray-dark);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .section h3 {
+            color: var(--text-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Consolas', monospace;
+        }
+
+        .implementation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .implementation-card {
+            background: var(--gray-medium);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .features-list {
+            list-style-type: none;
+        }
+
+        .features-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: "•";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .implementation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Aiden West</a>
+            <div class="nav-links">
+                <a href="projects.html">Projects</a>
+                <a href="about.html">About</a>
+                <a href="papers.html">Papers</a>
+                <a href="resume.html">Resume</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="project-header">
+        <h1 class="project-title">N×N Sliding Puzzle Solver</h1>
+        <p>An efficient implementation of the A* algorithm for solving sliding puzzles</p>
+    </header>
+
+    <main class="project-content">
+        <section class="section" data-aos="fade-up">
+            <h2>Project Overview</h2>
+            <p>This project provides two distinct implementations of a sliding puzzle solver, each optimized for different use cases. Both implementations leverage the A* search algorithm to find optimal solutions for n×n sliding puzzles, with unique approaches to state management and solution finding.</p>
+            
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Twin-Board Implementation</h3>
+                    <p>Uses a twin board technique for efficient solvability detection and comprehensive puzzle management.</p>
+                    <ul class="features-list">
+                        <li>Guaranteed solvability detection</li>
+                        <li>Multiple heuristic options</li>
+                        <li>Comprehensive testing framework</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Pure A* Implementation</h3>
+                    <p>Focuses on memory efficiency and includes segment-based solving capabilities.</p>
+                    <ul class="features-list">
+                        <li>Memory-efficient state management</li>
+                        <li>Segment-based solving capability</li>
+                        <li>Streamlined state exploration</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Technical Implementation</h2>
+            
+            <h3>Core Components</h3>
+            <p>The project demonstrates advanced Java programming concepts and algorithm implementation:</p>
+            
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Data Structures</h3>
+                    <ul class="features-list">
+                        <li>Priority Queues for A* frontier management</li>
+                        <li>HashSets for efficient explored state tracking</li>
+                        <li>2D arrays for board representation</li>
+                        <li>LinkedLists for solution path reconstruction</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Algorithms</h3>
+                    <ul class="features-list">
+                        <li>A* Search algorithm implementation</li>
+                        <li>Manhattan distance heuristic calculation</li>
+                        <li>Hamming distance computation</li>
+                        <li>State space exploration techniques</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Technical Skills Demonstrated</h3>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Java Features</h3>
+                    <ul class="features-list">
+                        <li>Object-Oriented Design with inheritance and encapsulation</li>
+                        <li>Interface implementation (Comparable, Iterable)</li>
+                        <li>Generic Collections Framework usage</li>
+                        <li>Stream API for efficient state processing</li>
+                        <li>Custom comparators for state prioritization</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Software Engineering</h3>
+                    <ul class="features-list">
+                        <li>Clean code principles and documentation</li>
+                        <li>Memory optimization techniques</li>
+                        <li>Performance profiling and optimization</li>
+                        <li>Unit testing and edge case handling</li>
+                        <li>Version control with Git</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Key Classes</h3>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Board.java & PuzzleState.java</h3>
+                    <ul class="features-list">
+                        <li>Immutable state representation</li>
+                        <li>Deep copying for state management</li>
+                        <li>Efficient neighbor generation</li>
+                        <li>Custom equality and hash code implementation</li>
+                        <li>Board validation and goal state checking</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Solver.java & AStarSolver.java</h3>
+                    <ul class="features-list">
+                        <li>A* search implementation with optimizations</li>
+                        <li>Twin board technique for solvability</li>
+                        <li>Solution path reconstruction</li>
+                        <li>Memory-efficient state exploration</li>
+                        <li>Performance monitoring capabilities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Example Usage</h3>
+            <div class="code-block">
+                <pre>// Create initial board
+int[][] initialTiles = {
+    {5, 1, 2, 3},
+    {0, 6, 7, 4},
+    {9, 10, 11, 8},
+    {13, 14, 15, 12}
+};
+
+Board initial = new Board(initialTiles);
+Solver solver = new Solver(initial);
+
+if (solver.isSolvable()) {
+    System.out.println("Minimum moves = " + solver.moves());
+    for (Board board : solver.solution()) {
+        System.out.println(board);
+    }
+}</pre>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Performance Considerations</h2>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Time Complexity</h3>
+                    <p>The A* algorithm's performance depends on the puzzle size and configuration. Performance has been optimized through:</p>
+                    <ul class="features-list">
+                        <li>Efficient heuristic calculations</li>
+                        <li>Optimized state management</li>
+                        <li>Smart duplicate detection</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Space Complexity</h3>
+                    <p>Memory usage varies between implementations:</p>
+                    <ul class="features-list">
+                        <li>Twin-Board: O(bd) where b is branching factor</li>
+                        <li>Pure A*: Optimized memory usage</li>
+                        <li>Efficient state storage</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Understanding Sliding Puzzles</h2>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>What is a Sliding Puzzle?</h3>
+                    <p>A sliding puzzle is a combination puzzle that challenges a player to slide pieces along certain routes to establish a certain end configuration. The most common type is the n×n sliding puzzle that consists of n² − 1 numbered tiles and one blank space.</p>
+                    <ul class="features-list">
+                        <li>Classic 15-puzzle is a 4×4 version</li>
+                        <li>Only one tile can be moved at a time</li>
+                        <li>Tiles can only slide into the blank space</li>
+                        <li>Goal is to arrange tiles in numerical order</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Computational Challenge</h3>
+                    <p>Solving sliding puzzles presents significant computational challenges:</p>
+                    <ul class="features-list">
+                        <li>NP-hard for general n×n configurations</li>
+                        <li>State space grows factorially with size</li>
+                        <li>Not all configurations are solvable</li>
+                        <li>Optimal solutions require sophisticated algorithms</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Mathematical Properties</h3>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Solvability</h3>
+                    <ul class="features-list">
+                        <li>Depends on the parity of permutations</li>
+                        <li>Related to blank tile's position</li>
+                        <li>Can be determined without solving</li>
+                        <li>Twin board technique proves unsolvability</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Search Space</h3>
+                    <ul class="features-list">
+                        <li>3×3 puzzle: 362,880 possible states</li>
+                        <li>4×4 puzzle: Over 10 trillion states</li>
+                        <li>Each state has 2-4 possible moves</li>
+                        <li>Branching factor affects search complexity</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Aiden West. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
