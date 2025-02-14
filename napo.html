@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napoleon Chat Bot - Aiden West</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        /* Variables */
+        :root {
+            --primary-color: #111111;
+            --accent-color: #00A3FF;
+            --text-color: #FFFFFF;
+            --background-color: #1A1A1A;
+            --gray-dark: #222222;
+            --gray-medium: #333333;
+            --blue-glow: 0 0 10px rgba(0, 163, 255, 0.5);
+            --section-padding: 5rem 2rem;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Project Header */
+        .project-header {
+            padding: calc(var(--section-padding) + 4rem) 2rem 3rem;
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--gray-dark) 100%);
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .project-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: var(--gray-dark);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .section h3 {
+            color: var(--text-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tech-card {
+            background: var(--gray-medium);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "•";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .code-block {
+            background: var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Consolas', monospace;
+        }
+
+        .demo-video {
+            width: 100%;
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Aiden West</a>
+            <div class="nav-links">
+                <a href="projects.html">Projects</a>
+                <a href="about.html">About</a>
+                <a href="papers.html">Papers</a>
+                <a href="resume.html">Resume</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="project-header">
+        <h1 class="project-title">Napoleon Chat Bot</h1>
+        <p>An AI-powered chatbot that brings Napoleon Bonaparte to life as an unhinged Twitch streamer</p>
+    </header>
+
+    <main class="project-content">
+        <section class="section" data-aos="fade-up">
+            <h2>Project Overview</h2>
+            <p>The Napoleon Chat Bot is a unique fusion of historical character roleplay and modern streaming culture, creating an entertaining and interactive experience where users can converse with an AI-powered Napoleon Bonaparte who behaves like an eccentric Twitch streamer. The project combines voice interaction, text-to-speech technology, and advanced language models to create a memorable and humorous interaction.</p>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Key Features</h3>
+                    <ul class="feature-list">
+                        <li>Voice-activated interaction using Speech Recognition</li>
+                        <li>Dynamic text-to-speech with French accent simulation</li>
+                        <li>Integration with ElevenLabs for high-quality voice synthesis</li>
+                        <li>Fallback TTS system using pyttsx3</li>
+                        <li>Conversation history logging and playback</li>
+                        <li>Real-time responses with Twitch-inspired personality</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h3>Napoleon's Personality</h3>
+                    <ul class="feature-list">
+                        <li>Acts like a Twitch streamer begging for subscriptions</li>
+                        <li>Mixes historical references with modern internet slang</li>
+                        <li>Paranoid about spies and conspiracies</li>
+                        <li>Randomly gives shoutouts to fictional subscribers</li>
+                        <li>Combines French phrases with English profanity</li>
+                        <li>Makes frequent references to conquering countries</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Technical Implementation</h2>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Core Technologies</h3>
+                    <ul class="feature-list">
+                        <li>Python for core application logic</li>
+                        <li>OLLAMA for AI language model integration</li>
+                        <li>ElevenLabs API for voice synthesis</li>
+                        <li>Speech Recognition for voice input</li>
+                        <li>Pygame for audio playback</li>
+                        <li>JSON for data handling</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h3>AI Components</h3>
+                    <ul class="feature-list">
+                        <li>Custom prompt engineering for character consistency</li>
+                        <li>Context management for conversation coherence</li>
+                        <li>Dynamic temperature settings for personality variation</li>
+                        <li>Fallback systems for robust operation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Voice Processing Pipeline</h3>
+            <p>The application uses a sophisticated voice processing pipeline that handles both input and output:</p>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Input Processing</h3>
+                    <ul class="feature-list">
+                        <li>Ambient noise adjustment</li>
+                        <li>Speech-to-text conversion</li>
+                        <li>Error handling for unclear speech</li>
+                        <li>Timeout management for user interactions</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h3>Output Generation</h3>
+                    <ul class="feature-list">
+                        <li>Primary ElevenLabs voice synthesis</li>
+                        <li>Backup TTS system with accent simulation</li>
+                        <li>Dynamic voice parameter adjustment</li>
+                        <li>French accent simulation for backup system</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Key Features Deep Dive</h2>
+            
+            <h3>AI Personality System</h3>
+            <p>The chatbot's personality is carefully crafted through a detailed prompt system that combines historical accuracy with modern streaming culture:</p>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Character Traits</h3>
+                    <ul class="feature-list">
+                        <li>Historical Napoleon's strategic mindset</li>
+                        <li>Twitch streamer mannerisms and terminology</li>
+                        <li>Integrated subscription and donation references</li>
+                        <li>Dynamic mood and response variations</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h3>Conversation Management</h3>
+                    <ul class="feature-list">
+                        <li>Context-aware responses</li>
+                        <li>Memory of recent interactions</li>
+                        <li>Persistent conversation logging</li>
+                        <li>Interactive conversation flow</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Voice Synthesis System</h3>
+            <p>The project implements a robust voice synthesis system with fallback capabilities:</p>
+            
+            <div class="code-block">
+<pre>def text_to_speech(text, model="eleven_multilingual_v2"):
+    try:
+        # Primary ElevenLabs synthesis
+        response = requests.post(url, headers=headers, data=json.dumps(data))
+        if response.status_code == 200:
+            # Process and play audio
+        else:
+            # Fall back to backup TTS
+            engine = pyttsx3.init()
+            # Configure voice parameters
+            engine.say(text)
+            engine.runAndWait()
+    except Exception as e:
+        # Handle errors and use backup system
+        print(f"Error with ElevenLabs, using backup TTS: {e}")
+        # Initialize backup TTS</pre>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Future Enhancements</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h3>Planned Features</h3>
+                    <ul class="feature-list">
+                        <li>Integration with Whisper for improved speech recognition</li>
+                        <li>Enhanced context management for longer conversations</li>
+                        <li>More dynamic personality variations</li>
+                        <li>Improved French accent simulation</li>
+                        <li>GUI interface for easier interaction</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h3>Technical Improvements</h3>
+                    <ul class="feature-list">
+                        <li>Optimized model loading and response times</li>
+                        <li>Enhanced error handling and recovery</li>
+                        <li>Improved voice quality and naturalness</li>
+                        <li>Better handling of background noise</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Aiden West. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -83,7 +83,7 @@
             color: var(--accent-color);
         }
 
-        /* Projects Section */
+        /* Projects Header */
         .projects-header {
             padding: calc(var(--section-padding) + 2rem) 2rem 2rem;
             background: linear-gradient(45deg, var(--primary-color) 0%, var(--gray-dark) 100%);
@@ -101,6 +101,7 @@
             color: #888;
         }
 
+        /* Projects Grid */
         .projects-grid {
             max-width: 1200px;
             margin: 0 auto;
@@ -118,6 +119,7 @@
             display: flex;
             flex-direction: column;
             border: 1px solid rgba(0, 163, 255, 0.1);
+            height: 100%;
         }
 
         .project-card:hover {
@@ -167,6 +169,7 @@
         .project-links {
             display: flex;
             gap: 1rem;
+            margin-top: auto;
         }
 
         .project-link {
@@ -203,6 +206,10 @@
             .projects-header h1 {
                 font-size: 2rem;
             }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -214,7 +221,7 @@
                 <a href="projects.html">Projects</a>
                 <a href="about.html">About</a>
                 <a href="papers.html">Papers</a>
-                <a href="resume.html"
+                <a href="resume.html">Resume</a>
                 <a href="index.html#contact">Contact</a>
             </div>
         </div>
@@ -238,7 +245,7 @@
                 </div>
                 <p class="project-description">A retro-style arcade game where players control a dragon named Trogdor to burn down villages while dodging knights, wizards, and other enemies across increasingly challenging levels.</p>
                 <div class="project-links">
-                    <a href="#" class="project-link">View Project</a>
+                    <a href="trog.html" class="project-link">View Project</a>
                     <a href="https://github.com/aidenisaman/CS370Trogdor" class="project-link">GitHub</a>
                 </div>
             </div>
@@ -256,7 +263,7 @@
                 </div>
                 <p class="project-description">A hilarious AI chatbot that brings Napoleon Bonaparte to life as an unhinged Twitch streamer, combining voice interaction and AI-powered responses.</p>
                 <div class="project-links">
-                    <a href="#" class="project-link">View Project</a>
+                    <a href="napo.html" class="project-link">View Project</a>
                     <a href="https://github.com/aidenisaman/napoleonChatBot" class="project-link">GitHub</a>
                 </div>      
             </div>
@@ -274,7 +281,7 @@
                 </div>
                 <p class="project-description">A web application for managing Magic: The Gathering card collections, with features for tracking card prices, managing inventory, and analyzing collection value.</p>
                 <div class="project-links">
-                    <a href="#" class="project-link">View Project</a>
+                    <a href="mtg.html" class="project-link">View Project</a>
                     <a href="https://github.com/aidenisaman/MTGcollectionSite" class="project-link">GitHub</a>
                 </div>
             </div>
@@ -296,10 +303,27 @@
                     <a href="puzzle.html" class="project-link">View Project</a>
                     <a href="https://github.com/aidenisaman/aStarSlidingPuzzleSolver" class="project-link">GitHub</a>
                 </div>
+            </div>
         </div>
 
-    </div>
-</section>
+        <!-- Blackjack AI Project -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+            <img src="images/blackjack.jpg" alt="Blackjack AI Project" class="project-image">
+            <div class="project-content">
+                <h3 class="project-title">Blackjack AI with Card Counting</h3>
+                <div class="project-tags">
+                    <span class="project-tag">Python</span>
+                    <span class="project-tag">Machine Learning</span>
+                    <span class="project-tag">Q-Learning</span>
+                    <span class="project-tag">NumPy</span>
+                </div>
+                <p class="project-description">An intelligent agent that masters blackjack through reinforcement learning and card counting strategies. Features adaptive betting, multi-deck support, and comprehensive performance analysis.</p>
+                <div class="project-links">
+                    <a href="blackjack.html" class="project-link">View Project</a>
+                    <a href="https://github.com/aidenisaman/blackJackBot" class="project-link">GitHub</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer>

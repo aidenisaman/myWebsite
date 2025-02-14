@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack AI Project - Aiden West</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    <style>
+        /* Variables */
+        :root {
+            --primary-color: #111111;
+            --accent-color: #00A3FF;
+            --text-color: #FFFFFF;
+            --background-color: #1A1A1A;
+            --gray-dark: #222222;
+            --gray-medium: #333333;
+            --blue-glow: 0 0 10px rgba(0, 163, 255, 0.5);
+            --section-padding: 5rem 2rem;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Project Header */
+        .project-header {
+            padding: calc(var(--section-padding) + 4rem) 2rem 3rem;
+            background: linear-gradient(45deg, var(--primary-color) 0%, var(--gray-dark) 100%);
+            text-align: center;
+        }
+
+        .project-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .project-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: var(--gray-dark);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .section h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .section h3 {
+            color: var(--text-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+        }
+
+        .implementation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .implementation-card {
+            background: var(--gray-medium);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 163, 255, 0.1);
+        }
+
+        .features-list {
+            list-style-type: none;
+        }
+
+        .features-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: "•";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .code-block {
+            background: var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Consolas', monospace;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .implementation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">Aiden West</a>
+            <div class="nav-links">
+                <a href="projects.html">Projects</a>
+                <a href="about.html">About</a>
+                <a href="papers.html">Papers</a>
+                <a href="resume.html">Resume</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="project-header">
+        <h1 class="project-title">Blackjack AI with Card Counting</h1>
+        <p>An intelligent agent that masters blackjack through reinforcement learning and card counting</p>
+    </header>
+
+    <main class="project-content">
+        <section class="section" data-aos="fade-up">
+            <h2>Project Overview</h2>
+            <p>This project implements an AI system that learns to play blackjack optimally using reinforcement learning while incorporating card counting strategies. The system adapts its betting and playing decisions based on the count of cards seen, demonstrating both basic strategy mastery and advanced gameplay techniques.</p>
+            
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Core Features</h3>
+                    <ul class="features-list">
+                        <li>Q-learning implementation for strategy optimization</li>
+                        <li>Hi-Lo card counting system integration</li>
+                        <li>Dynamic betting strategy based on true count</li>
+                        <li>Multiple deck support (1-8 decks)</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Performance Metrics</h3>
+                    <ul class="features-list">
+                        <li>Comprehensive performance tracking</li>
+                        <li>Win/loss/tie statistics</li>
+                        <li>ROI analysis across different deck counts</li>
+                        <li>Strategy deviation analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Technical Implementation</h2>
+            
+            <h3>System Architecture</h3>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Game Engine</h3>
+                    <ul class="features-list">
+                        <li>Realistic blackjack rules implementation</li>
+                        <li>Deck management with shuffle tracking</li>
+                        <li>Dealer AI with house rules</li>
+                        <li>Multi-deck support with penetration tracking</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>AI Components</h3>
+                    <ul class="features-list">
+                        <li>Q-learning algorithm implementation</li>
+                        <li>Dynamic exploration/exploitation balance</li>
+                        <li>Card counting integration</li>
+                        <li>Adaptive betting strategy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>AI Strategy</h3>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Basic Strategy</h3>
+                    <ul class="features-list">
+                        <li>Optimal play based on player/dealer cards</li>
+                        <li>Hard/soft hand differentiation</li>
+                        <li>Split and double-down decisions</li>
+                        <li>Progressive learning through gameplay</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Advanced Techniques</h3>
+                    <ul class="features-list">
+                        <li>True count calculation</li>
+                        <li>Deck penetration tracking</li>
+                        <li>Betting spread optimization</li>
+                        <li>Strategy deviations based on count</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Example Implementation</h3>
+            <div class="code-block">
+                <pre>
+# Initialize AI with custom parameters
+ai = BlackjackAI(
+    learning_rate=0.1,
+    discount_factor=0.95,
+    epsilon=0.1
+)
+
+# Run simulation
+game = BlackjackGame(num_decks=6)
+continue_game, reward = game.deal_initial_cards()
+
+while continue_game:
+    state = game.get_game_state()
+    action = ai.choose_action(state)
+    continue_game, reward = game.player_action(action)
+    
+    # Update AI's knowledge
+    new_state = game.get_game_state()
+    ai.update(state, action, reward, new_state)</pre>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Performance Analysis</h2>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Learning Metrics</h3>
+                    <ul class="features-list">
+                        <li>Win rate improvement over time</li>
+                        <li>Strategy convergence analysis</li>
+                        <li>Return on investment tracking</li>
+                        <li>Count-based decision accuracy</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Optimization Results</h3>
+                    <ul class="features-list">
+                        <li>Deck number impact analysis</li>
+                        <li>Penetration depth effectiveness</li>
+                        <li>Betting spread optimization</li>
+                        <li>Risk-adjusted return metrics</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-aos="fade-up">
+            <h2>Project Insights</h2>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Key Findings</h3>
+                    <ul class="features-list">
+                        <li>Optimal deck penetration for counting</li>
+                        <li>Impact of deck count on ROI</li>
+                        <li>Strategy deviation effectiveness</li>
+                        <li>Risk management insights</li>
+                    </ul>
+                </div>
+                <div class="implementation-card">
+                    <h3>Future Enhancements</h3>
+                    <ul class="features-list">
+                        <li>Neural network integration</li>
+                        <li>Multi-player simulation support</li>
+                        <li>Advanced counting systems</li>
+                        <li>Real-time visualization tools</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Aiden West. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
